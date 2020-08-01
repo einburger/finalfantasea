@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 4096936301547157470}
   - component: {fileID: 2238963032666946927}
   - component: {fileID: 1346290465154091424}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Fish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +385,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5000307852253574073}
   - component: {fileID: 2108766979451180385}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: FieldOfVision
   m_TagString: Untagged
   m_Icon: {fileID: 0}

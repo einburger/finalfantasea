@@ -18,7 +18,7 @@ public class MeshCombiner : MonoBehaviour
 
         for (int i = 0; i < meshFilters.Length; i++) 
         {
-            combiners[i].mesh = meshFilters[i].mesh;
+            combiners[i].mesh = meshFilters[i].sharedMesh;
             combiners[i].transform = meshFilters[i].transform.localToWorldMatrix;
             meshFilters[i].gameObject.SetActive(false);
         }

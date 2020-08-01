@@ -21,6 +21,10 @@ public class FishSpawner : MonoBehaviour
             float zpos = transform.position.z + Random.Range(-transform.localScale.z/2, transform.localScale.z/2);
             Vector3 randPos = new Vector3(xpos, ypos, zpos);
             GameObject fish = Instantiate(fishPrefab, randPos, Quaternion.identity);
+
+            float randomScale = Random.Range(0.3f, 0.5f);
+            fish.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+
             spawnCount++;
         }
     }
@@ -28,4 +32,9 @@ public class FishSpawner : MonoBehaviour
     private bool canSpawn() {
         return spawnCount < spawnMax;
     }
+
+    private void pickEyes() { }
+    private void pickFins() { } 
+    private void pickHat() { }
+    private void pickFacialHair() { }
 }

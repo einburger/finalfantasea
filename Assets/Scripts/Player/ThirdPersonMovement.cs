@@ -12,6 +12,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public float turnSmoothing = 0.1f;
 
     private bool walking = false;
+    private bool mouseHeld = false;
 
     float turnOmega;
     // Update is called once per frame

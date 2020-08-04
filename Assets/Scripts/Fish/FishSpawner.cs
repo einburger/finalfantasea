@@ -5,7 +5,7 @@ using UnityEngine;
 public class FishSpawner : MonoBehaviour
 {
     [SerializeField]
-    private GameObject fishPrefab;
+    public GameObject fishPrefab;
 
     private int spawnMax = 300;
     private int spawnCount = 0;

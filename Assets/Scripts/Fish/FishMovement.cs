@@ -10,13 +10,9 @@ public class FishMovement : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private float turnOmega = 0f;
     private float turnSmoothing = 0.7f;
-    private float swimSpeed = 5f;
 
     [SerializeField]
     private float wiggleIntensityConstant = 10f;
-
-    [SerializeField]
-    private float wiggleSpeedConstant = 10f;
 
     private void Awake() 
     {

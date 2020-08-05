@@ -4,10 +4,9 @@ using UnityEngine.VFX;
 public class FishingCursorTarget : MonoBehaviour
 {
     private VisualEffect cursorEffect;
-
     private int layerMask;
-
     private Vector3 velocity;
+    private bool cursorDisplayed = false;
 
     private void Awake() {
         layerMask = LayerMask.GetMask("Water");
@@ -22,10 +21,10 @@ public class FishingCursorTarget : MonoBehaviour
         float distance = 30;
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         if (Physics.Raycast(ray, out hitInfo, distance, layerMask)) {
-            if (cursorEffect.GetUInt("Rate") == 0) {
+            if (!cursorDisplayed) {
+                cursorDisplayed = true;
+                cursorEffect.SendEvent("EnterAim");
                 transform.position = hitInfo.point;
-                cursorEffect.SetUInt("Rate", 10);
-                Debug.Log(cursorEffect.GetUInt("Rate"));
             }
             transform.position = Vector3.SmoothDamp(transform.position, hitInfo.point, ref velocity, 0.2f);
         } 
@@ -33,6 +32,7 @@ public class FishingCursorTarget : MonoBehaviour
 
     public void EraseCursor()
     {
-        cursorEffect.SetUInt("Rate", 0);
+        cursorDisplayed = false;
+        cursorEffect.SendEvent("ExitAim");
     }
 }

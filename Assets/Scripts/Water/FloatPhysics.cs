@@ -31,7 +31,7 @@ public class FloatPhysics : MonoBehaviour
         //        waveHeight = vertices[i].y;
         //    }
         //}
-        return waterTransform.position.y + ((Mathf.PerlinNoise(transform.position.x, transform.position.z) - 0.5f) / 10f);
+        return waterTransform.position.y + ((Mathf.PerlinNoise(transform.position.x, transform.position.z) - 0.5f) / 5f);
     }
 
     // Update is called once per frame

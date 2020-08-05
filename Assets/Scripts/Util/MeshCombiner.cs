@@ -14,6 +14,10 @@ public class MeshCombiner : MonoBehaviour
 
 
         MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
+        if (meshFilters.Length == 0) 
+        {
+            return;
+        }
         CombineInstance[] combiners = new CombineInstance[meshFilters.Length];
 
         for (int i = 0; i < meshFilters.Length; i++) 
@@ -22,6 +26,7 @@ public class MeshCombiner : MonoBehaviour
             combiners[i].transform = meshFilters[i].transform.localToWorldMatrix;
             meshFilters[i].gameObject.SetActive(false);
         }
+
 
         transform.GetComponent<MeshFilter>().mesh = new Mesh();
         transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combiners);

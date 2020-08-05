@@ -15,8 +15,6 @@ public class FishingCursorTarget : MonoBehaviour
 
     public void DrawCursor()
     {
-        Debug.Log(cursorEffect.GetUInt("Rate"));
-
         RaycastHit hitInfo;
         float distance = 30;
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);

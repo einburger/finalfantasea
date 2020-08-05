@@ -13,7 +13,7 @@ Material:
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION _SPECULAR_SETUP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
+  m_DoubleSidedGI: 1
   m_CustomRenderQueue: -1
   stringTagMap:
     MotionVector: User
@@ -86,12 +86,15 @@ Material:
     - Vector1_155DDB1F: 0
     - Vector1_2BA49F1D: -0.66
     - Vector1_31552829: 0.1
-    - Vector1_54E47D38: 0.277
+    - Vector1_54E47D38: 0.07
+    - Vector1_7774676D: 0.859
+    - Vector1_7B96488E: 0.349
     - Vector1_8F5BC14F: 4.13
-    - Vector1_91AED047: 0.335
+    - Vector1_91AED047: 0.176
     - Vector1_94F567E1: 19.45
     - Vector1_A865ACFD: 2
-    - Vector1_AFE5DA8F: 27.6
+    - Vector1_AFE5DA8F: 0
+    - Vector1_F6F1E16B: 0.328
     - _AlphaClip: 0
     - _Blend: 1
     - _BumpScale: 1
@@ -119,10 +122,10 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - Color_624F7DF8: {r: 0.504717, g: 1, b: 0.9903003, a: 0.3764706}
-    - Color_8C4388A8: {r: 0, g: 0.12955268, b: 0.1981132, a: 0}
+    - Color_8C4388A8: {r: 0, g: 0, b: 0, a: 0}
     - Color_8D7B7F6B: {r: 0, g: 0.7505078, b: 1, a: 0.49019608}
-    - Color_DC272951: {r: 0.03404236, g: 0.19471517, b: 0.4811321, a: 0.59607846}
-    - Color_ED7EB5F6: {r: 0.575, g: 0.9867924, b: 1, a: 0.9411765}
+    - Color_DC272951: {r: 0.03404236, g: 0.19471514, b: 0.4811321, a: 0.92156863}
+    - Color_ED7EB5F6: {r: 0.575, g: 0.9867924, b: 1, a: 0.95686275}
     - _BaseColor: {r: 0, g: 0.9270375, b: 1, a: 0.5882353}
     - _Color: {r: 0, g: 0.9270375, b: 1, a: 0.5882353}
     - _EmissionColor: {r: 0.09793306, g: 0.10070444, b: 0.26280773, a: 1}

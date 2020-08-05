@@ -12,7 +12,6 @@ public class MeshCombiner : MonoBehaviour
         transform.rotation = Quaternion.identity;
         transform.position = Vector3.zero;
 
-
         MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
         if (meshFilters.Length == 0) 
         {
@@ -28,9 +27,9 @@ public class MeshCombiner : MonoBehaviour
         }
 
 
-        transform.GetComponent<MeshFilter>().mesh = new Mesh();
-        transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combiners);
-        transform.gameObject.SetActive(true);
+        GetComponent<MeshFilter>().sharedMesh = new Mesh();
+        GetComponent<MeshFilter>().sharedMesh.CombineMeshes(combiners);
+        gameObject.SetActive(true);
         transform.rotation = oldRotation;
         transform.position = oldPosition;
     }

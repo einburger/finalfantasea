@@ -361,7 +361,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wiggleIntensityConstant: 15.68
-  wiggleSpeedConstant: 20.92
 --- !u!114 &1346290465154091424
 MonoBehaviour:
   m_ObjectHideFlags: 0

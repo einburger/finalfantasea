@@ -5,43 +5,55 @@ using UnityEngine;
 public class ThirdPersonMovement : MonoBehaviour
 {
     public Animator animController;
-    public CharacterController controller;
     public Transform cameraTransform;
+    private Rigidbody rigidbody;
 
-    public float speed = 6f;
+    public float speed = 0.1f;
     public float turnSmoothing = 0.1f;
 
     private bool walking = false;
 
+    private Quaternion rotation; 
+    private bool inputDetected = false;
+
     float turnOmega;
-    // Update is called once per frame
-    void Update()
+
+    private void Awake() {
+        rigidbody = GetComponent<Rigidbody>();
+    }
+
+    Vector3 getInputDir()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+        return new Vector3(horizontal, 0f, vertical).normalized;
+    }
 
-        if (!controller.isGrounded) {
-            Vector3 vec = Vector3.zero;
-            controller.SimpleMove(vec);
+    void FixedUpdate() {
+        if (inputDetected) {
+            Vector3 moveDir = rotation * Vector3.forward;
+            Vector3 normMoveDir = moveDir.normalized;
+            normMoveDir.y = 0f;
+            rigidbody.MovePosition(transform.position + (normMoveDir * speed * Time.fixedDeltaTime));
+            rigidbody.MoveRotation(rotation);
         }
+    }
 
+    void Update()
+    {
+        Vector3 direction = getInputDir();
         if (direction.magnitude >= 0.1f) {
+            inputDetected = true;
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnOmega, turnSmoothing);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-            Vector3 moveDir = Quaternion.Euler(0f, angle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            rotation = Quaternion.Euler(0f, angle, 0f); 
 
             if (!walking) {
                 animController.SetTrigger("walkTrigger");
                 walking = true;
             }
-            
         } else {
-            Vector3 moveDir = Vector3.forward * 0f; 
-
+            inputDetected = false;
             if (walking) {
                 animController.SetTrigger("idleTrigger");
                 walking = false;

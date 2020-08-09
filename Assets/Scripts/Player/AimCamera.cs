@@ -12,7 +12,7 @@ public class AimCamera : MonoBehaviour
        cameraOffset = GetComponent<CinemachineCameraOffset>();
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetMouseButton(1)) {
             if (!cameraOffset.enabled) {

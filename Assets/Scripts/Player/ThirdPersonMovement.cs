@@ -47,17 +47,8 @@ public class ThirdPersonMovement : MonoBehaviour
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnOmega, turnSmoothing);
             rotation = Quaternion.Euler(0f, angle, 0f); 
-
-            if (!walking) {
-                animController.SetTrigger("walkTrigger");
-                walking = true;
-            }
         } else {
             inputDetected = false;
-            if (walking) {
-                animController.SetTrigger("idleTrigger");
-                walking = false;
-            }
         }
     }
 }

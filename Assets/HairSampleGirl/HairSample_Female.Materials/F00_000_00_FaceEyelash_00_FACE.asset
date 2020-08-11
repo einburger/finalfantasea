@@ -9,15 +9,14 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: F00_000_00_FaceEyelash_00_FACE
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_ShaderKeywords: _ALPHAMODULATE_ON _ALPHATEST_ON _NORMALMAP
+  m_ShaderKeywords: _ALPHATEST_ON _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 2450
   stringTagMap:
-    RenderType: Transparent
-  disabledShaderPasses:
-  - SHADOWCASTER
+    RenderType: TransparentCutout
+  disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -85,7 +84,7 @@ Material:
     - _BumpScale: 1
     - _Cull: 2
     - _CullMode: 0
-    - _Cutoff: 0.404
+    - _Cutoff: 0.672
     - _DebugMode: 0
     - _DstBlend: 0
     - _EnvironmentReflections: 1
@@ -115,18 +114,19 @@ Material:
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 2
-    - _Surface: 1
+    - _SrcBlend: 1
+    - _Surface: 0
     - _UvAnimRotation: 0
     - _UvAnimScrollX: 0
     - _UvAnimScrollY: 0
     - _WorkflowMode: 1
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
     - _Color: {r: 0.36862746, g: 0.27450982, b: 0.27058825, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _OutlineColor: {r: 0.27450982, g: 0.09019608, b: 0.1254902, a: 1}
     - _RimColor: {r: 0, g: 0, b: 0, a: 1}
     - _ShadeColor: {r: 0.36862746, g: 0.27450982, b: 0.27058825, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+  m_BuildTextureStacks: []

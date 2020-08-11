@@ -29,11 +29,12 @@ public class FloatPhysics : MonoBehaviour
     public void FixedUpdate()
     {
         float waveHeight = getWaveHeight(transform.position.x, transform.position.z);
+        Vector3 dragForce = Vector3.zero;
         if (transform.position.y <= waveHeight) {
             float depthSubmerged = (waveHeight - transform.position.y) / waveHeight;
             rigidBody.AddForce(new Vector3(0f, Mathf.Abs(Physics.gravity.y) * multiplier * depthSubmerged, 0f), ForceMode.Acceleration);
+            dragForce = rigidBody.velocity * -1;
         }
-        Vector3 dragForce = rigidBody.velocity * -1;
         rigidBody.AddForce(dragForce, ForceMode.Acceleration);
     }
 }

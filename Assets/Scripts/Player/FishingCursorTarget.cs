@@ -16,7 +16,7 @@ public class FishingCursorTarget : MonoBehaviour
     public void DrawCursor()
     {
         RaycastHit hitInfo;
-        float distance = 30;
+        float distance = 1000;
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         if (Physics.Raycast(ray, out hitInfo, distance, layerMask)) {
             if (!cursorDisplayed) {
@@ -24,7 +24,7 @@ public class FishingCursorTarget : MonoBehaviour
                 cursorEffect.SendEvent("EnterAim");
                 transform.position = hitInfo.point;
             }
-            transform.position = Vector3.SmoothDamp(transform.position, hitInfo.point, ref velocity, 0.2f);
+            transform.position = Vector3.SmoothDamp(transform.position, hitInfo.point, ref velocity, 0.05f);
         } 
     }
 

@@ -80,6 +80,9 @@ namespace Fishnet {
                 player.cursorStateStack.PopState();
                 player.ResetAim();
             } 
+            if (Input.GetMouseButtonDown(0)) {
+                player.CastLure();
+            }
         }
         public override void UpdateState(Player player) {
             player.DrawCursor();

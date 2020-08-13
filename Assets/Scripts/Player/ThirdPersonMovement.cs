@@ -6,7 +6,7 @@ public class ThirdPersonMovement : MonoBehaviour
 {
     public Animator animController;
     public Transform cameraTransform;
-    private Rigidbody rigidbody;
+    public Rigidbody rigidbody;
 
     public float speed = 0.1f;
     public float turnSmoothing = 0.1f;
@@ -19,7 +19,7 @@ public class ThirdPersonMovement : MonoBehaviour
     float turnOmega;
 
     private void Awake() {
-        rigidbody = GetComponent<Rigidbody>();
+        //rigidbody = GetComponent<Rigidbody>();
     }
 
     Vector3 getInputDir()

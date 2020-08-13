@@ -7,10 +7,12 @@ public class FishingCursorTarget : MonoBehaviour
     private int layerMask;
     private Vector3 velocity;
     private bool cursorDisplayed = false;
+    private MeshRenderer cursor;
 
     private void Awake() {
         layerMask = LayerMask.GetMask("Water");
-        cursorEffect = GetComponentInChildren<VisualEffect>();
+        // cursorEffect = GetComponentInChildren<VisualEffect>();
+        cursor = GetComponentInChildren<MeshRenderer>();
     }
 
     public void DrawCursor()
@@ -21,16 +23,18 @@ public class FishingCursorTarget : MonoBehaviour
         if (Physics.Raycast(ray, out hitInfo, distance, layerMask)) {
             if (!cursorDisplayed) {
                 cursorDisplayed = true;
-                cursorEffect.SendEvent("EnterAim");
+                // cursorEffect.SendEvent("EnterAim");
+                cursor.enabled = true;
                 transform.position = hitInfo.point;
             }
-            transform.position = Vector3.SmoothDamp(transform.position, hitInfo.point, ref velocity, 0.05f);
+            transform.position = Vector3.SmoothDamp(transform.position, hitInfo.point, ref velocity, 0.1f);
         } 
     }
 
     public void EraseCursor()
     {
         cursorDisplayed = false;
-        cursorEffect.SendEvent("ExitAim");
+        //cursorEffect.SendEvent("ExitAim");
+        cursor.enabled = false;
     }
 }

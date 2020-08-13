@@ -31,6 +31,20 @@ namespace Fishnet {
         public abstract void UpdateState(Player player);
     }
 
+    public class SailingState : ICharacterState
+    {
+        public override void HandleInput(Player player) {
+            if (Input.GetKeyDown(KeyCode.F)) {
+                player.movementStateStack.PopState();
+                player.ChangeMover();
+                player.animationController.SetTrigger("idleTrigger");
+            }
+        }
+        public override void UpdateState(Player player) {
+            player.LockToRaft();
+        }  
+    }
+
     public class WalkingState : ICharacterState 
     {
         public override void HandleInput(Player player) {
@@ -38,6 +52,11 @@ namespace Fishnet {
                 player.movementStateStack.PopState();
                 player.animationController.ResetTrigger("walkTrigger");
                 player.animationController.SetTrigger("idleTrigger");
+            }
+            if (Input.GetKeyDown(KeyCode.F)) {
+                player.movementStateStack.PopState();
+                player.movementStateStack.PushState(new SailingState());
+                player.ChangeMover();
             }
         }
         public override void UpdateState(Player player) {
@@ -53,6 +72,10 @@ namespace Fishnet {
                 player.movementStateStack.PushState(new WalkingState());
                 player.animationController.ResetTrigger("idleTrigger");
                 player.animationController.SetTrigger("walkTrigger");
+            }
+            if (Input.GetKeyDown(KeyCode.F)) {
+                player.movementStateStack.PushState(new SailingState());
+                player.ChangeMover();
             }
         }
         public override void UpdateState(Player player) {

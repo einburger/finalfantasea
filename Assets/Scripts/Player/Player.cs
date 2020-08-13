@@ -7,7 +7,8 @@ namespace Fishnet {
 public class Player : MonoBehaviour
 {
     [SerializeField] private FishingCursorTarget fishingCursor;
-    [SerializeField] private GameObject lure;
+    [SerializeField] private GameObject lure, player, raft;
+    [SerializeField] private Transform raftTransform;
     [SerializeField] public Animator animationController;
     private CinemachineCameraOffset cameraOffset;
     public CharacterStatePushdown cursorStateStack;
@@ -50,9 +51,7 @@ public class Player : MonoBehaviour
         Vector3 globalProjectileVelocity = go.transform.TransformDirection(projectileVelocity);
 
         lure.transform.position = Camera.main.transform.position;
-        lure.GetComponent<Rigidbody>().velocity = Vector3.zero;
         lure.GetComponent<Rigidbody>().velocity = globalProjectileVelocity;
-        //lure.GetComponent<Rigidbody>().AddForce(globalProjectileVelocity, ForceMode.VelocityChange);
     }
 
     public bool InMotion() {
@@ -62,6 +61,15 @@ public class Player : MonoBehaviour
         vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical);
         return direction.sqrMagnitude > 0f;
+    }
+
+    public void LockToRaft() {
+        player.transform.position = raftTransform.position + new Vector3(0f, 0.2f, 0f);
+        player.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+    }
+
+    public void ChangeMover() {
+        raft.GetComponent<BoatMovement>().enabled = !raft.GetComponent<BoatMovement>().enabled;
     }
 
     void Start() {
@@ -77,7 +85,6 @@ public class Player : MonoBehaviour
     void Update() {
         cursorStateStack.Update(this);
         movementStateStack.Update(this);
-        Debug.Log(lure.GetComponent<Rigidbody>().velocity);
     }
 }
 

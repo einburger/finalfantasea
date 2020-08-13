@@ -127,4 +127,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterTransform: {fileID: 0}
   multiplier: 3
-  depthOffset: 1
+  waterDragForceMultiplier: 1

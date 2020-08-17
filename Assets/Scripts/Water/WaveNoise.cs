@@ -11,7 +11,7 @@ public class WaveNoise : MonoBehaviour {
     public ComputeBuffer vertexData;
     float offset = 0.0f;
 
-    public MeshFilter waveMeshFilter;
+    MeshFilter waveMeshFilter;
     Vector3[] inVerts;
     Vector3[] originalVerts;
 
@@ -37,7 +37,7 @@ public class WaveNoise : MonoBehaviour {
         vertexData.SetData(originalVerts);
         noiseKernel.SetFloat("NoiseOffset", offset);
         noiseKernel.SetBuffer(kernelID, "vertices", vertexData);
-        noiseKernel.Dispatch(kernelID, 10000, 1, 1);
+        noiseKernel.Dispatch(kernelID, inVerts.Length, 1, 1);
         vertexData.GetData(inVerts);
         waveMeshFilter.sharedMesh.vertices = inVerts;
         waveMeshFilter.sharedMesh.RecalculateBounds();
@@ -45,11 +45,11 @@ public class WaveNoise : MonoBehaviour {
         offset += 0.0003f;
     }
 
-    void OnDestroy() {
+    private void OnDisable() {
         waveMeshFilter.sharedMesh.vertices = originalVerts;
         waveMeshFilter.sharedMesh.RecalculateBounds();
         waveMeshFilter.sharedMesh.RecalculateNormals();
-    } 
+    }
 
     public float SampleHeight(int x, int z) {
         return noise.GetPixel(x, z).r;

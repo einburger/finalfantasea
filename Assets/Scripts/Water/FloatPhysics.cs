@@ -29,7 +29,7 @@ public class FloatPhysics : MonoBehaviour
         Func<Vector3, Vector3, float> distance = (lhs, rhs) => {
             float xDiff = rhs.x - lhs.x;
             float zDiff = rhs.z - lhs.z;
-            return xDiff * xDiff + zDiff + zDiff;
+            return xDiff * xDiff + zDiff * zDiff;
         };
 
         Vector3 current = new Vector3(x, 0f, z);
@@ -53,17 +53,16 @@ public class FloatPhysics : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void FixedUpdate()
+    public void Update()
     {
         Vector3 dragForce = Vector3.zero;
         Vector3[] verts = boatMesh.sharedMesh.vertices;
         for (int i = 0; i < verts.Length; i++) {
             Vector3 globalVert = boatMesh.transform.TransformPoint(verts[i]);
-            //float waveHeight = getWaveHeight(globalVert.x, globalVert.z);
-            float waveHeight = 0f;
+            float waveHeight = getWaveHeight(globalVert.x, globalVert.z);
             if (globalVert.y < waveHeight) {
-                float percentSubmerged = ((float)waveHeight - (float)globalVert.y) / (float)waveHeight;
-                rigidBody.AddForceAtPosition(new Vector3(0f, Mathf.Clamp(percentSubmerged * multiplier, -50, 50), 0f), globalVert, ForceMode.Impulse);
+                float percentSubmerged = (float)waveHeight - (float)globalVert.y;
+                rigidBody.AddForceAtPosition(new Vector3(0f, percentSubmerged * multiplier, 0f), globalVert, ForceMode.Impulse);
                 dragForce = -1 * rigidBody.velocity * waterDragForceMultiplier;
             }
         }

@@ -62,7 +62,7 @@ public class FloatPhysics : MonoBehaviour
             float waveHeight = getWaveHeight(globalVert.x, globalVert.z);
             if (globalVert.y < waveHeight) {
                 float percentSubmerged = (float)waveHeight - (float)globalVert.y;
-                rigidBody.AddForceAtPosition(new Vector3(0f, percentSubmerged * multiplier, 0f), globalVert, ForceMode.Impulse);
+                rigidBody.AddForceAtPosition(new Vector3(0f, percentSubmerged * multiplier, 0f), globalVert, ForceMode.Acceleration);
                 dragForce = -1 * rigidBody.velocity * waterDragForceMultiplier;
             }
         }

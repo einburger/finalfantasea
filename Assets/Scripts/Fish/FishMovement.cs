@@ -42,7 +42,7 @@ public class FishMovement : MonoBehaviour
 
     private bool reachedTarget()
     {
-        return (targetPosition - transform.position).sqrMagnitude < 5f; 
+        return (targetPosition - transform.position).sqrMagnitude < 10f; 
     }
 
     private void updateWiggle() 

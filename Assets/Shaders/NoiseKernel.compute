@@ -1,0 +1,28 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+float NoiseOffset;
+RWStructuredBuffer<float3> vertices;
+
+float3 GerstnerWave(float2 direction, float3 p, float steepness, float wavelength) {
+    float k = 2 * 3.1415 / wavelength;
+    float c = sqrt(9.8 / k);
+    float2 d = normalize(direction);
+    float f = k * (dot(d, p.xz)) - c * NoiseOffset;
+    float a = steepness / k;
+    return float3(d.x + (a * cos(f)), 
+                  a * sin(f), 
+                  d.y * (a * cos(f)));
+}
+
+[numthreads(10,1,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    float3 p = vertices[id.x];
+    p += GerstnerWave(float2(1, 0), p, 0.05, 200);
+    p += GerstnerWave(float2(0, 1), p, 0.15, 100);
+    p += GerstnerWave(float2(1, 1), p, 0.085, 125);
+    vertices[id.x] = p;
+}

@@ -3,7 +3,12 @@ using UnityEngine;
 
 public class FloatPhysics : MonoBehaviour
 {
-    [SerializeField] public MeshFilter waterMesh;
+    [SerializeField] public GameObject water = null;
+    [SerializeField] public MeshFilter waterMesh = null;
+    [SerializeField] public MeshFilter boatMesh = null;
+    [SerializeField] public MakeWaves waveScript = null;
+    
+    private int layerMask;
     private Rigidbody rigidBody;
     public float multiplier = 3f;
     public float waterDragForceMultiplier = 1f;
@@ -15,6 +20,8 @@ public class FloatPhysics : MonoBehaviour
     private void Awake() 
     {
         rigidBody = GetComponent<Rigidbody>();
+        layerMask = LayerMask.GetMask("Water");
+        boatMesh.sharedMesh.MarkDynamic();
     }
 
     private float getWaveHeight(float x, float z) 
@@ -24,6 +31,7 @@ public class FloatPhysics : MonoBehaviour
             float zDiff = rhs.z - lhs.z;
             return xDiff * xDiff + zDiff + zDiff;
         };
+
         Vector3 current = new Vector3(x, 0f, z);
         Vector3[] verts = waterMesh.mesh.vertices;
         Vector3 closest = waterMesh.transform.TransformPoint(verts[0]);
@@ -37,16 +45,28 @@ public class FloatPhysics : MonoBehaviour
         return closest.y;
     }
 
+    int RoundUpOrDown(float value) {
+        if (value % 0.5f == 0) {
+            return (int) Mathf.Ceil(value);
+        } 
+        return (int) Mathf.Floor(value);
+    }
+
     // Update is called once per frame
     public void FixedUpdate()
     {
-        float waveHeight = getWaveHeight(transform.position.x, transform.position.z);
         Vector3 dragForce = Vector3.zero;
-        if (transform.position.y <= waveHeight) {
-            float percentSubmerged = (waveHeight - transform.position.y) / waveHeight;
-            rigidBody.AddRelativeForce(new Vector3(0f, multiplier * percentSubmerged, 0f), ForceMode.Impulse);
-            dragForce = rigidBody.velocity * -1 * waterDragForceMultiplier;
+        Vector3[] verts = boatMesh.sharedMesh.vertices;
+        for (int i = 0; i < verts.Length; i++) {
+            Vector3 globalVert = boatMesh.transform.TransformPoint(verts[i]);
+            //float waveHeight = getWaveHeight(globalVert.x, globalVert.z);
+            float waveHeight = 0f;
+            if (globalVert.y < waveHeight) {
+                float percentSubmerged = ((float)waveHeight - (float)globalVert.y) / (float)waveHeight;
+                rigidBody.AddForceAtPosition(new Vector3(0f, Mathf.Clamp(percentSubmerged * multiplier, -50, 50), 0f), globalVert, ForceMode.Impulse);
+                dragForce = -1 * rigidBody.velocity * waterDragForceMultiplier;
+            }
         }
-        rigidBody.AddForce(dragForce, ForceMode.Acceleration);
+        rigidBody.AddForce(dragForce, ForceMode.Force);
     }
 }

@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class BoatMovement : MonoBehaviour
 {
-    private float turnOmega = 0.1f;
-    private float turnSmoothing = 0.1f;
-    [SerializeField] private Rigidbody rigidbody;
-    [SerializeField] private Transform engine;
     [SerializeField] private float speed = 2f;
+
+    private Rigidbody rb;
+    void Start() {
+        rb = GetComponent<Rigidbody>();
+    }
 
     void FixedUpdate()
     {
-        rigidbody.AddRelativeForce(new Vector3(0f, 0f, Input.GetAxisRaw("Vertical") * speed), ForceMode.Force);
-        rigidbody.AddRelativeTorque(new Vector3(0f, Input.GetAxisRaw("Horizontal") * speed, 0f), ForceMode.Force);
+        rb.AddForceAtPosition(transform.forward * speed * Input.GetAxisRaw("Vertical"), transform.position, ForceMode.Force);
+        rb.AddRelativeTorque(new Vector3(0f, Input.GetAxisRaw("Horizontal"), 0f) * 0.01f, ForceMode.Impulse);
     }
 }

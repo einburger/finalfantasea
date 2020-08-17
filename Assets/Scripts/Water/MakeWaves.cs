@@ -1,39 +1,45 @@
 ﻿using UnityEngine;
 
-public class MakeWaves : MonoBehaviour
+public class MakeWaves : ScriptableObject
 {
     private MeshFilter meshFilter;
     private Mesh mesh;
+    private float[,] noise;
     public float lastTimeStep = 0f;
 
     private float originalHeight = 0f;
 
-    private int offset = 0;
+    private float offset = 0f;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        meshFilter = GetComponent<MeshFilter>();
-        Vector3 worldPoint = meshFilter.transform.TransformPoint(meshFilter.mesh.vertices[0]);
-        originalHeight = worldPoint.y;
+    void createNoise(int width, int height) {
+        float scale = 33f;
+        noise = new float[width, height];
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                float perlinX = x / scale;
+                float perlinY = y / scale;
+                float value = Mathf.PerlinNoise(perlinX, perlinY) * 10f;
+                noise[x, y] = value;                    
+            }
+        }
+    }
+
+    void updateHeights() {
+        var verts = meshFilter.mesh.vertices;
+        for (int y = 0; y < 33; y++) {
+            for (int x = 0; x < 33; x++) {
+                float newHeight = Mathf.PerlinNoise((((float)x + offset) / 33f), (((float)y + offset) / 33f)) * 2f - 1.0f; 
+                verts[y * 33 + x].y = newHeight; 
+            }
+        }
+        offset += 0.06f;
+        meshFilter.mesh.vertices = verts;
+        meshFilter.mesh.RecalculateNormals();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        var verts = meshFilter.mesh.vertices;
-        float scale = 0.01f;
-
-        lastTimeStep = Time.time;
-        for (int i = 0; i < verts.Length; i++) {
-            //Vector3 vert = meshFilter.transform.TransformPoint(verts[i]);
-            float newHeight = Mathf.PerlinNoise((i + offset) * scale, (i + offset) * scale) * 2.0f;
-            verts[i] = new Vector3(verts[i].x, newHeight , verts[i].z);
-        }
-
-        meshFilter.mesh.vertices = verts;
-        meshFilter.mesh.RecalculateNormals();
-
-        offset++;
+        updateHeights();
     }
 }

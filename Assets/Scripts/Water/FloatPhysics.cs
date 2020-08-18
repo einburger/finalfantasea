@@ -14,26 +14,22 @@ public class FloatPhysics : MonoBehaviour
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();    
+
     }
 
-    private float getWaveHeight(float x, float z) 
+    private float getWaveHeight(Vector3 p) 
     {
-        Func<Vector3, Vector3, float> distance = (lhs, rhs) => {
-            float xDiff = rhs.x - lhs.x;
-            float zDiff = rhs.z - lhs.z;
-            return xDiff * xDiff + zDiff * zDiff;
-        };
-
-        Vector3 current = new Vector3(x, 0f, z);
+        Vector3 current = p;
         Vector3[] verts = waterMesh.mesh.vertices;
         Vector3 closest = waterMesh.transform.TransformPoint(verts[0]);
         for (int i = 0; i < verts.Length; i++) {
             Vector3 candidatePoint = waterMesh.transform.TransformPoint(verts[i]);
-            if (distance(candidatePoint, current) <= distance(closest, current)) {
+            if (Vector3.Distance(candidatePoint, current) <= Vector3.Distance(closest, current)) {
                    closest = candidatePoint;
             }
         }
 
+        Debug.DrawLine(p, closest, Color.red, 0.01f);
         return closest.y;
     }
 
@@ -44,23 +40,14 @@ public class FloatPhysics : MonoBehaviour
         Vector3[] verts = floatyMesh.sharedMesh.vertices;
         for (int i = 0; i < verts.Length; i++) {
             Vector3 globalVert = floatyMesh.transform.TransformPoint(verts[i]);
-            float waveHeight = getWaveHeight(globalVert.x, globalVert.z);
+            float waveHeight = getWaveHeight(globalVert);
             if (globalVert.y < (waveHeight + boatDepthOffset)) {
                 float percentSubmerged = ((float)waveHeight + boatDepthOffset) - (float)globalVert.y;
                 rb.AddForceAtPosition(new Vector3(0f, percentSubmerged * buoyancyMultiplier, 0f), globalVert, ForceMode.Acceleration);
+                Debug.DrawLine(globalVert, globalVert + Vector3.up * percentSubmerged * buoyancyMultiplier, Color.green, 0.01f);
                 dragForce = -1 * rb.velocity * waterDragForceMultiplier;
-            }
+            } 
         }
         rb.AddForce(dragForce, ForceMode.Force);
-    }
-
-    void Update() {
-        Vector3 rotation = rb.rotation.eulerAngles;
-
-        // rotation.z = Mathf.Clamp(rotation.z, -45f, 45f);
-        // rb.rotation = Quaternion.Euler(0f, 0f, rotation.z);
-
-        // rotation.x = Mathf.Clamp(rotation.x, -45f, 45f);
-        // rb.rotation = Quaternion.Euler(rotation.x, 0f, 0f);
     }
 }

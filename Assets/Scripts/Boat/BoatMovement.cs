@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class BoatMovement : MonoBehaviour
 {
@@ -9,6 +11,8 @@ public class BoatMovement : MonoBehaviour
     [SerializeField] private float turnSpeed = 3f;
     [SerializeField] private VisualEffect vfxLeft;
     [SerializeField] private VisualEffect vfxRight;
+    [SerializeField] private Transform engineTransform = null;
+    [SerializeField] private Volume postProc = null;
 
     int vfxLeftID;
     int vfxRightID;
@@ -18,10 +22,25 @@ public class BoatMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    void OnEnable() {
+        DepthOfField dof;
+        postProc.profile.TryGet(out dof);
+        dof.active = true;
+    }
+
+    void OnDisable() {
+        DepthOfField dof;
+        postProc.profile.TryGet(out dof);
+        dof.active = false;
+    }
+
     void FixedUpdate()
     {
         // rb.AddForceAtPosition(transform.forward * speed * Input.GetAxisRaw("Vertical"), transform.position, ForceMode.Force);
-        rb.AddRelativeForce(new Vector3(0f, Input.GetAxisRaw("Vertical") * sailSpeed, 0f), ForceMode.Force);
+        Vector3 forceDirection = rb.transform.up.normalized * Input.GetAxisRaw("Vertical") * sailSpeed;
+        // Debug.DrawLine(position, engineTransform.position, Color.blue, 0.01f);
+        // rb.AddRelativeForce(forceDirection, ForceMode.Force);
+        rb.AddForceAtPosition(forceDirection, engineTransform.position, ForceMode.Force);
         rb.AddRelativeTorque(new Vector3(0f, 0f, Input.GetAxisRaw("Horizontal")) * -turnSpeed, ForceMode.Force);
         float velocity = rb.velocity.sqrMagnitude;
         if (velocity > 1f) {

@@ -16,8 +16,7 @@ public class WaveNoise : MonoBehaviour {
     [Range(0f, 0.1f)] public float wavespeed = 0.0003f;
 
     MeshFilter waveMeshFilter;
-    Vector3[] inVerts;
-    Vector3[] originalVerts;
+    Vector3[] inVerts;    Vector3[] originalVerts;
 
     void copyArray(Vector3[] dest, Vector3[] src) {
         for (int i = 0; i < src.Length; i++) {

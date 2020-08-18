@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThirdPersonMovement : MonoBehaviour
+public class ThirdPersonMovement : MonoBehaviour 
 {
     public Animator animController;
     public Transform cameraTransform;
-    public Rigidbody rigidbody;
+    public Rigidbody rb;
 
     public float speed = 0.1f;
     public float turnSmoothing = 0.1f;
-
-    private bool walking = false;
 
     private Quaternion rotation; 
     private bool inputDetected = false;
@@ -34,8 +32,8 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 moveDir = rotation * Vector3.forward;
             Vector3 normMoveDir = moveDir.normalized;
             normMoveDir.y = 0f;
-            rigidbody.MovePosition(transform.position + (normMoveDir * speed * Time.fixedDeltaTime));
-            rigidbody.MoveRotation(rotation);
+            rb.MovePosition(transform.position + (normMoveDir * speed * Time.fixedDeltaTime));
+            rb.MoveRotation(rotation);
         }
     }
 

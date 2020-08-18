@@ -20,7 +20,7 @@ class WaveTile : ScriptableObject
                 // Vector3 wavePoint = waveTileObject.transform.TransformPoint(verts[y * 4 + x]);
                 // int sampleX = (int)((wavePoint.x - Mathf.Floor(wavePoint.x)) * 10f) - 5;
                 // int sampleY = (int)((wavePoint.y - Mathf.Floor(wavePoint.y)) * 10f) - 5;
-                verts[stride + y * 10 + x].y = waveNoise.SampleHeight(x, y);
+                // verts[stride + y * 10 + x].y = waveNoise.SampleHeight(x, y);
             }
         }
 

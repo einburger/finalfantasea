@@ -14,7 +14,7 @@ Material:
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 2900
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
@@ -95,12 +95,12 @@ Material:
     - Vector1_2BA49F1D: -0.66
     - Vector1_31552829: 0.1
     - Vector1_35637DCB: 1.56
-    - Vector1_4C6ECAF9: 0.26
-    - Vector1_54E47D38: 0.072
+    - Vector1_4C6ECAF9: 0.425
+    - Vector1_54E47D38: 0
     - Vector1_704F2590: -1
-    - Vector1_73993A28: -1.58
-    - Vector1_7774676D: 0.834
-    - Vector1_7B96488E: 0.791
+    - Vector1_73993A28: -1.37
+    - Vector1_7774676D: 1
+    - Vector1_7B96488E: 0.497
     - Vector1_8F5BC14F: 4.13
     - Vector1_91AED047: 0.176
     - Vector1_94F567E1: 19.45

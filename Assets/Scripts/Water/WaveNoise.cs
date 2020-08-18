@@ -10,8 +10,10 @@ public class WaveNoise : MonoBehaviour {
     public ComputeShader noiseKernel;
     public ComputeBuffer vertexData;
     float offset = 0.0f;
+    [SerializeField] float xOffset, yOffset;
     [Range(0f, 10f)] public float steepness = 1.0f;
     [Range(0f, 1f)] public float wavelength = 1.0f;
+    [Range(0f, 0.1f)] public float wavespeed = 0.0003f;
 
     MeshFilter waveMeshFilter;
     Vector3[] inVerts;
@@ -27,16 +29,18 @@ public class WaveNoise : MonoBehaviour {
 
     void Awake() {
         waveMeshFilter = GetComponent<MeshFilter>();
-        inVerts = waveMeshFilter.sharedMesh.vertices;
+        inVerts = new Vector3[waveMeshFilter.sharedMesh.vertices.Length];
         originalVerts = new Vector3[inVerts.Length];
+        copyArray(inVerts, waveMeshFilter.sharedMesh.vertices);
         copyArray(originalVerts, inVerts);
-        Debug.Log(inVerts.Length);
         vertexData = new ComputeBuffer(inVerts.Length, sizeof(float) * 3);
     }
 
     void FixedUpdate() {
         int kernelID = noiseKernel.FindKernel("CSMain");
         vertexData.SetData(originalVerts);
+        noiseKernel.SetFloat("xOffset", xOffset);
+        noiseKernel.SetFloat("yOffset", yOffset);
         noiseKernel.SetFloat("NoiseOffset", offset);
         noiseKernel.SetFloat("SteepnessMultiplier", steepness);
         noiseKernel.SetFloat("WavelengthMultiplier", wavelength);
@@ -44,21 +48,10 @@ public class WaveNoise : MonoBehaviour {
         noiseKernel.Dispatch(kernelID, inVerts.Length, 1, 1);
         vertexData.GetData(inVerts);
 
-        waveMeshFilter.sharedMesh.vertices = inVerts;
-        waveMeshFilter.sharedMesh.RecalculateBounds();
-        waveMeshFilter.sharedMesh.RecalculateNormals();
-        waveMeshFilter.sharedMesh.RecalculateTangents();
-        offset += 0.0003f;
-    }
-
-    private void OnDestroy() {
-        waveMeshFilter.sharedMesh.vertices = originalVerts;
-        waveMeshFilter.sharedMesh.RecalculateBounds();
-        waveMeshFilter.sharedMesh.RecalculateNormals();
-        waveMeshFilter.sharedMesh.RecalculateTangents();
-    }
-
-    public float SampleHeight(int x, int z) {
-        return noise.GetPixel(x, z).r;
+        waveMeshFilter.mesh.vertices = inVerts;
+        waveMeshFilter.mesh.RecalculateBounds();
+        waveMeshFilter.mesh.RecalculateNormals();
+        waveMeshFilter.mesh.RecalculateTangents();
+        offset += wavespeed;
     }
 }

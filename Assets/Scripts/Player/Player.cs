@@ -15,17 +15,11 @@ public class Player : MonoBehaviour
     public CharacterStatePushdown movementStateStack;
 
     public void Aim() {
-        if (!cameraOffset.enabled) {
-            cameraOffset.enabled = true;
-        }
         // do other stuff
         // draw trajectory
     }
 
     public void ResetAim() {
-        if (cameraOffset.enabled) {
-            cameraOffset.enabled = false;
-        }
         fishingCursor.EraseCursor();
     }
 
@@ -65,11 +59,13 @@ public class Player : MonoBehaviour
 
     public void LockToRaft() {
         player.transform.position = raftTransform.position + new Vector3(0f, 0.2f, 0f);
-        player.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+        player.transform.rotation = raftTransform.transform.rotation;
     }
 
     public void ChangeMover() {
         raft.GetComponent<BoatMovement>().enabled = !raft.GetComponent<BoatMovement>().enabled;
+        player.GetComponent<ThirdPersonMovement>().enabled = !player.GetComponent<ThirdPersonMovement>().enabled;
+        player.GetComponentInChildren<Rigidbody>().useGravity = !player.GetComponentInChildren<Rigidbody>().useGravity;
     }
 
     void Start() {

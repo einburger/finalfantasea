@@ -43,7 +43,7 @@ public class FloatPhysics : MonoBehaviour
             float waveHeight = getWaveHeight(globalVert);
             if (globalVert.y < (waveHeight + boatDepthOffset)) {
                 float percentSubmerged = ((float)waveHeight + boatDepthOffset) - (float)globalVert.y;
-                rb.AddForceAtPosition(new Vector3(0f, percentSubmerged * buoyancyMultiplier, 0f), globalVert, ForceMode.Acceleration);
+                rb.AddForceAtPosition(new Vector3(0f, percentSubmerged * buoyancyMultiplier, 0f), globalVert, ForceMode.Impulse);
                 Debug.DrawLine(globalVert, globalVert + Vector3.up * percentSubmerged * buoyancyMultiplier, Color.green, 0.01f);
                 dragForce = -1 * rb.velocity * waterDragForceMultiplier;
             } 

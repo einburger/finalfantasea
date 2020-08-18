@@ -41,7 +41,8 @@ public class BoatMovement : MonoBehaviour
         // Debug.DrawLine(position, engineTransform.position, Color.blue, 0.01f);
         // rb.AddRelativeForce(forceDirection, ForceMode.Force);
         rb.AddForceAtPosition(forceDirection, engineTransform.position, ForceMode.Force);
-        rb.AddRelativeTorque(new Vector3(0f, 0f, Input.GetAxisRaw("Horizontal")) * -turnSpeed, ForceMode.Force);
+        // rb.AddRelativeTorque(new Vector3(0f, 0f, Input.GetAxisRaw("Horizontal")) * -turnSpeed, ForceMode.Force);
+        rb.rotation *= Quaternion.Euler(0f, 0f, -1f * Input.GetAxisRaw("Horizontal") * 0.5f);
         float velocity = rb.velocity.sqrMagnitude;
         if (velocity > 1f) {
             velocity /= 10f;

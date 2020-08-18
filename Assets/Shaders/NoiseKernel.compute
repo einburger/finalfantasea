@@ -4,18 +4,22 @@
 // Create a RenderTexture with enableRandomWrite flag and set it
 // with cs.SetTexture
 float NoiseOffset;
-float SteepnessMultiplier;
-float WavelengthMultiplier;
 float xOffset;
 float yOffset;
 
+int NumberOfWaves;
+struct Wave {
+    float2 windDir;
+    float steepness;
+    float wavelength;
+};
+
+StructuredBuffer<Wave> waves;
 RWStructuredBuffer<float3> vertices;
 
 float3 GerstnerWave(float2 direction, float3 p, float steepness, float wavelength) {
     p.x += xOffset;
     p.z += yOffset;
-    steepness *= SteepnessMultiplier;
-    wavelength *= WavelengthMultiplier;
     float k = 2 * 3.1415 / wavelength;
     float c = sqrt(9.8 / k);
     float2 d = normalize(direction);
@@ -28,9 +32,11 @@ float3 GerstnerWave(float2 direction, float3 p, float steepness, float wavelengt
 
 [numthreads(16,1,1)]
 void CSMain (uint3 id : SV_DispatchThreadID) {
+
     float3 p = vertices[id.x];
-    p += GerstnerWave(float2(1, 0), p, 0.05, 200);
-    p += GerstnerWave(float2(1, 1.3), p, 0.15, 55);
-    p += GerstnerWave(float2(1, 0.5), p, 0.085, 125);
+    for (int i = 0; i < NumberOfWaves; i++) {
+        p += GerstnerWave(waves[i].windDir, p, waves[i].steepness, waves[i].wavelength);
+    }
+
     vertices[id.x] = p;
 }

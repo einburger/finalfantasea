@@ -11,10 +11,10 @@ public class FloatPhysics : MonoBehaviour
     public float buoyancyMultiplier = 3f;
     public float waterDragForceMultiplier = 1f;
     public float boatDepthOffset = 2f;
+    public bool grounded = true;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();    
-
     }
 
     private float getWaveHeight(Vector3 p) 
@@ -38,6 +38,7 @@ public class FloatPhysics : MonoBehaviour
     {
         Vector3 dragForce = Vector3.zero;
         Vector3[] verts = floatyMesh.sharedMesh.vertices;
+        int aboveWaterCount = 0;
         for (int i = 0; i < verts.Length; i++) {
             Vector3 globalVert = floatyMesh.transform.TransformPoint(verts[i]);
             float waveHeight = getWaveHeight(globalVert);
@@ -46,7 +47,13 @@ public class FloatPhysics : MonoBehaviour
                 rb.AddForceAtPosition(new Vector3(0f, percentSubmerged * buoyancyMultiplier, 0f), globalVert, ForceMode.Impulse);
                 Debug.DrawLine(globalVert, globalVert + Vector3.up * percentSubmerged * buoyancyMultiplier, Color.green, 0.01f);
                 dragForce = -1 * rb.velocity * waterDragForceMultiplier;
+                aboveWaterCount++;
             } 
+        }
+        if (aboveWaterCount > 2) {
+            grounded = false;
+        } else {
+            grounded = true;
         }
         rb.AddForce(dragForce, ForceMode.Force);
     }

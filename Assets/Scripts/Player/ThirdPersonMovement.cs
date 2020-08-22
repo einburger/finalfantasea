@@ -6,6 +6,7 @@ public class ThirdPersonMovement : MonoBehaviour
 {
     public Animator animController;
     public Transform cameraTransform;
+    public Transform player;
     public Rigidbody rb;
 
     public float speed = 0.1f;
@@ -32,7 +33,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 moveDir = rotation * Vector3.forward;
             Vector3 normMoveDir = moveDir.normalized;
             normMoveDir.y = 0f;
-            rb.MovePosition(transform.position + (normMoveDir * speed * Time.fixedDeltaTime));
+            rb.MovePosition(rb.transform.position + (normMoveDir * speed * Time.fixedDeltaTime));
             rb.MoveRotation(rotation);
         }
     }
@@ -43,7 +44,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (direction.magnitude >= 0.1f) {
             inputDetected = true;
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnOmega, turnSmoothing);
+            float angle = Mathf.SmoothDampAngle(player.eulerAngles.y, targetAngle, ref turnOmega, turnSmoothing);
             rotation = Quaternion.Euler(0f, angle, 0f); 
         } else {
             inputDetected = false;

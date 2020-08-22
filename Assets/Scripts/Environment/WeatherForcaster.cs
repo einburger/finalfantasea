@@ -18,7 +18,6 @@ public class WeatherForcaster : MonoBehaviour
             weeklyPercipitation[i] = Mathf.Clamp01(percipitationCurve.Evaluate(Random.value));
             forcast[i] = RainLevel(weeklyPercipitation[i]);
         }    
-        Debug.Log("hello");
         weatherPanel.SetPercipitationText(forcast);
     }
 

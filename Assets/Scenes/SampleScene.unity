@@ -1214,10 +1214,6 @@ MonoBehaviour:
     m_VirtualCamera: {fileID: 2004937226}
     m_ActivateAfter: 0
     m_MinDuration: 0
-  - m_FullHash: -244277176
-    m_VirtualCamera: {fileID: 2004937226}
-    m_ActivateAfter: 0
-    m_MinDuration: 0
   m_DefaultBlend:
     m_Style: 1
     m_Time: 0.5
@@ -1894,7 +1890,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 657661813}
-  m_LocalRotation: {x: 0.043401726, y: -0.18801074, z: 0.008316572, w: 0.9811723}
+  m_LocalRotation: {x: 0.043643516, y: -0.15681371, z: 0.006936581, w: 0.986639}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3116,6 +3112,126 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: vivi
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.size
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[33]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[13]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[12]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[14]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[15]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[16]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[17]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[21]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[22]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[23]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[27]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[31]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[32]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[34]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[38]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[39]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[24]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[2]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[28]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[29]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: d7eb032542fc41a49b6356c540a6fb76,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[30]
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7eb032542fc41a49b6356c540a6fb76, type: 3}
@@ -4501,7 +4617,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1820947731}
-  m_LocalRotation: {x: 0.22154686, y: 0.000029586023, z: -0.0000067217275, w: 0.97514975}
+  m_LocalRotation: {x: 0.22154684, y: 0.00002962178, z: -0.0000067298506, w: 0.97514975}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4645,7 +4761,6 @@ MonoBehaviour:
   player: {fileID: 2046086237}
   raft: {fileID: 1202457590}
   raftTransform: {fileID: 988906880}
-  animationController: {fileID: 2046086238}
 --- !u!114 &1889946178
 MonoBehaviour:
   m_ObjectHideFlags: 0

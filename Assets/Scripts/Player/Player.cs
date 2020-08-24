@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace Fishnet {
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private FishingCursorTarget fishingCursor;
-    [SerializeField] private GameObject lure, player, raft;
-    [SerializeField] private Transform raftTransform;
-    [SerializeField] public Animator animationController;
-    private CinemachineCameraOffset cameraOffset;
+    [SerializeField] private FishingCursorTarget fishingCursor = null;
+    [SerializeField] private GameObject lure = null, player = null, raft = null;
+    [SerializeField] private Transform raftTransform = null;
+    [HideInInspector] public AnimationChanger animationChanger = null;
     public CharacterStatePushdown cursorStateStack;
     public CharacterStatePushdown movementStateStack;
 
-    public void Aim() {
-        // do other stuff
-        // draw trajectory
+    void Start() {
+        animationChanger = new AnimationChanger(player.GetComponent<Animator>());
+
+        cursorStateStack = new CharacterStatePushdown();
+        cursorStateStack.PushState(new ZoomedOutState(this));
+
+        movementStateStack = new CharacterStatePushdown();
+        movementStateStack.PushState(new IdleState(this));
     }
 
     public void ResetAim() {
@@ -46,6 +49,7 @@ public class Player : MonoBehaviour
 
         lure.transform.position = Camera.main.transform.position;
         lure.GetComponent<Rigidbody>().velocity = globalProjectileVelocity;
+
     }
 
     public bool InMotion() {
@@ -68,19 +72,10 @@ public class Player : MonoBehaviour
         player.GetComponentInChildren<Rigidbody>().useGravity = !player.GetComponentInChildren<Rigidbody>().useGravity;
     }
 
-    void Start() {
-        cameraOffset = GetComponentInChildren<CinemachineCameraOffset>();
-
-        cursorStateStack = new CharacterStatePushdown();
-        cursorStateStack.PushState(new ZoomedOutState());
-
-        movementStateStack = new CharacterStatePushdown();
-        movementStateStack.PushState(new IdleState());
-    }
 
     void Update() {
-        cursorStateStack.Update(this);
-        movementStateStack.Update(this);
+        cursorStateStack.Update();
+        movementStateStack.Update();
     }
 }
 

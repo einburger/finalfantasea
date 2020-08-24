@@ -10,7 +10,7 @@ namespace Fishnet {
             stateStack = new Stack();
         }
 
-        public void PushState(ICharacterState nextState) {
+        public void PushState(CharacterState nextState) {
             stateStack.Push(nextState);
         }
 
@@ -18,112 +18,120 @@ namespace Fishnet {
             stateStack.Pop();
         }
 
-        public void Update(Player player) {
-            ICharacterState state = (ICharacterState) stateStack.Peek();
-            state.UpdateState(player);
-            state.HandleInput(player);
+        public void Update() {
+            CharacterState state = (CharacterState) stateStack.Peek();
+            state.UpdateState();
+            state.HandleInput();
         }
     }
 
-    public interface ICharacterState 
+    public abstract class CharacterState 
     {
-        void HandleInput(Player player);
-        void UpdateState(Player player);
+        protected Player player;
+        public CharacterState(Player player) {
+            this.player = player;
+        }
+        public abstract void HandleInput();
+        public virtual void UpdateState() { /* do nothing */ }
     }
 
-    public class SailingState : ICharacterState
+    public class SailingState : CharacterState
     {
-        public void HandleInput(Player player) {
+        public SailingState(Player player) : base(player) {
+            player.animationChanger.SetSailing();
+        }
+        public override void HandleInput() {
             if (Input.GetKeyDown(KeyCode.F)) {
+                player.animationChanger.SetIdle();
                 player.movementStateStack.PopState();
-                player.animationController.ResetTrigger("boatTrigger");
-                player.animationController.SetTrigger("idleTrigger");
                 player.ChangeMover();
             }
         }
-        public void UpdateState(Player player) {
+        public override void UpdateState() {
             player.LockToRaft();
         }  
     }
 
-    public class WalkingState : ICharacterState 
+    public class WalkingState : CharacterState 
     {
-        public void HandleInput(Player player) {
+        public WalkingState(Player player) : base(player) {
+            player.animationChanger.SetWalking();
+        }
+        public override void HandleInput() {
             if (!player.InMotion()) {
                 player.movementStateStack.PopState();
-                player.animationController.ResetTrigger("walkTrigger");
-                player.animationController.SetTrigger("idleTrigger");
+                player.movementStateStack.PushState(new IdleState(player));
             }
             if (Input.GetKeyDown(KeyCode.F)) {
                 player.movementStateStack.PopState();
-                player.movementStateStack.PushState(new SailingState());
-                player.animationController.ResetTrigger("walkTrigger");
-                player.animationController.SetTrigger("boatTrigger");
+                player.movementStateStack.PushState(new SailingState(player));
                 player.ChangeMover();
             }
         }
-        public void UpdateState(Player player) {
-            // process movement 
-        }  
     }
 
-    public class IdleState : ICharacterState 
+    public class IdleState : CharacterState 
     {
-        public void HandleInput(Player player) 
+        public IdleState(Player player) : base(player) {
+            player.animationChanger.SetIdle();
+        }
+        public override void HandleInput() 
         {
             if (player.InMotion()) {
-                player.movementStateStack.PushState(new WalkingState());
-                player.animationController.ResetTrigger("idleTrigger");
-                player.animationController.SetTrigger("walkTrigger");
+                player.movementStateStack.PopState();
+                player.movementStateStack.PushState(new WalkingState(player));
             }
             if (Input.GetKeyDown(KeyCode.F)) {
-                player.movementStateStack.PushState(new SailingState());
-                player.animationController.ResetTrigger("idleTrigger");
-                player.animationController.SetTrigger("boatTrigger");
+                player.movementStateStack.PushState(new SailingState(player));
                 player.ChangeMover();
             }
         }
-        public void UpdateState(Player player) {
-            // do nothing for idle state
-        }  
     }
 
-    public class ZoomedOutState : ICharacterState
+    public class ZoomedOutState : CharacterState
     {
-        public void HandleInput(Player player) {
+        public ZoomedOutState(Player player) : base(player) {
+            player.animationChanger.UnsetAiming();
+        }
+        public override void HandleInput() {
             if (Input.GetMouseButtonDown(1)) {
-                player.animationController.SetTrigger("aimTrigger");
-                player.cursorStateStack.PushState(new ZoomedInState());
-                player.Aim();
+                player.cursorStateStack.PushState(new ZoomedInState(player));
             }
         }
-        public void UpdateState(Player player) {
-            /* nothing for now */
-        }
     }
 
-    public class ZoomedInState : ICharacterState
+    public class ZoomedInState : CharacterState
     {
-        public void HandleInput(Player player) {
+        public ZoomedInState(Player player) : base(player) {
+            player.animationChanger.SetAiming();
+        }
+        public override void HandleInput() {
             if (Input.GetMouseButtonUp(1)) {
+                player.animationChanger.UnsetAiming();
                 player.cursorStateStack.PopState();
-                player.animationController.ResetTrigger("aimTrigger");
-                player.animationController.SetTrigger("idleTrigger");
                 player.ResetAim();
             } 
             if (Input.GetMouseButtonDown(0)) {
-                player.animationController.SetTrigger("castTrigger");
+                player.animationChanger.SetCasting();
                 player.CastLure();
+                player.cursorStateStack.PushState(new CastingState(player));
             }
         }
-        public void UpdateState(Player player) {
+        public override void UpdateState() {
             player.DrawCursor();
         }
     }
 
-    public class InventoryState : ICharacterState 
-    {
-        public void HandleInput(Player player) {}
-        public void UpdateState(Player player) {}  
+    public class CastingState : CharacterState {
+        bool canGetInput = false;
+        public CastingState(Player player) : base(player) {
+            player.animationChanger.SetCasting();
+        }
+        public override void HandleInput() {
+            if (Input.GetMouseButtonDown(0)) {
+                player.animationChanger.SetAiming();
+                player.cursorStateStack.PopState();
+            }
+        }
     }
 }

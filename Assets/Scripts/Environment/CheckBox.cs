@@ -16,14 +16,5 @@ public class CheckBox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (panel.dayPassed[day]) {
-            if (image.enabled) {
-                image.enabled = false;
-            }
-        } else  {
-            if (!image.enabled) {
-                image.enabled = true;
-            }
-        }
     }
 }

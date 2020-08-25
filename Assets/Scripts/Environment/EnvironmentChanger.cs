@@ -3,20 +3,20 @@ using UnityEngine.VFX;
 
 [ExecuteAlways] public class EnvironmentChanger : MonoBehaviour
 {
-    [SerializeField] private Light directionalLight;
-    [SerializeField] private EnvironmentPreset preset;
+    [SerializeField] private Light directionalLight = null;
+    [SerializeField] private EnvironmentPreset preset = null;
 
-    [SerializeField, Range(0f, 2f)] private float speedOfTime;
-    [SerializeField, Range(0, 24)] private float timeOfDay;
-    [SerializeField, Range(0, 7)] private float dayOfWeek;
+    [SerializeField, Range(0f, 2f)] private float speedOfTime = 1f;
+    [SerializeField, Range(0, 24)] private float timeOfDay = 0f;
+    [SerializeField, Range(0, 7)] private float dayOfWeek = 0f;
     private float timeSinceLoad = 0f;
     private const int hoursPerDay = 24;
     private const int hoursPerWeek = 168;
     private const int PercipitationConstant = 10000;
 
-    [SerializeField] private GameObject firefliesSystem;
-    [SerializeField] private VisualEffect rainSystem;
-    [SerializeField] private WeatherForcaster weatherForcast;
+    [SerializeField] private GameObject firefliesSystem = null;
+    [SerializeField] private VisualEffect rainSystem = null;
+    [SerializeField] private WeatherForcaster weatherForcast = null;
     private bool firefliesActive = false;
 
     private void Update() {

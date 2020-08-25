@@ -8,9 +8,8 @@ using UnityEngine.Rendering.Universal;
 public class BoatMovement : MonoBehaviour
 {
     [SerializeField] private float sailSpeed = 3f;
-    [SerializeField] private float turnSpeed = 3f;
-    [SerializeField] private VisualEffect vfxLeft;
-    [SerializeField] private VisualEffect vfxRight;
+    [SerializeField] private VisualEffect vfxLeft = null;
+    [SerializeField] private VisualEffect vfxRight = null;
     [SerializeField] private Transform engineTransform = null;
     [SerializeField] private FloatPhysics boat = null;
     [SerializeField] private Volume postProc = null;

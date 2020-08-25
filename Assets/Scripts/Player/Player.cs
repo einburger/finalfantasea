@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] private FishingCursorTarget fishingCursor = null;
     [SerializeField] private GameObject lure = null, player = null, raft = null;
     [SerializeField] private Transform raftTransform = null;
-    [HideInInspector] public AnimationChanger animationChanger = null;
+    [HideInInspector] public AnimationChanger animationChanger;
     public CharacterStatePushdown cursorStateStack;
     public CharacterStatePushdown movementStateStack;
 

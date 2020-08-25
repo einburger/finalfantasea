@@ -3,7 +3,7 @@
 public class WeatherForcaster : MonoBehaviour
 {
     [SerializeField] private AnimationCurve percipitationCurve = null;
-    [SerializeField] private WeatherPanel weatherPanel;
+    [SerializeField] private WeatherPanel weatherPanel = null;
     float[] weeklyPercipitation = new float[7];
     bool canUpdate = true;
     public void LockUpdates() { canUpdate = false; }

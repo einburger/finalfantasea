@@ -26,10 +26,12 @@ public class MeshCombiner : MonoBehaviour
             meshFilters[i].gameObject.SetActive(false);
         }
 
-        GetComponent<MeshFilter>().sharedMesh = new Mesh();
-        GetComponent<MeshFilter>().sharedMesh.CombineMeshes(combiners);
-        gameObject.SetActive(true);
-        transform.rotation = oldRotation;
-        transform.position = oldPosition;
+        if (combiners != null) {
+            GetComponent<MeshFilter>().sharedMesh = new Mesh();
+            GetComponent<MeshFilter>().sharedMesh.CombineMeshes(combiners);
+            gameObject.SetActive(true);
+            transform.rotation = oldRotation;
+            transform.position = oldPosition;
+        }
     }
 }

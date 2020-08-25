@@ -2,17 +2,11 @@
 using UnityEngine;
 
 public class WaveNoise : MonoBehaviour {
-    Renderer rend;
-    RenderTexture rendTex;
-    Texture2D noise;
-    Color[] pix;
-    int width, height;
-
     public ComputeShader noiseKernel;
     public ComputeBuffer vertexData;
     public ComputeBuffer waveData;
     float offset = 0.0f;
-    [SerializeField] float xOffset, yOffset;
+    [SerializeField] float xOffset = 0f, yOffset = 0f;
     [Range(0f, 0.1f)] public float wavespeed = 0.0003f;
 
     [Serializable] public struct Wave {
@@ -21,7 +15,7 @@ public class WaveNoise : MonoBehaviour {
         [Range(0f, 5f)] public float wavelength;
     };
 
-    [SerializeField] Wave[] waves;
+    [SerializeField] Wave[] waves = null;
     MeshFilter waveMeshFilter;
     Vector3[] inVerts;    
     Vector3[] originalVerts;
@@ -65,5 +59,10 @@ public class WaveNoise : MonoBehaviour {
         waveMeshFilter.mesh.RecalculateNormals();
         waveMeshFilter.mesh.RecalculateTangents();
         offset += wavespeed;
+    }
+
+    void OnDestroy() {
+        vertexData.Dispose();    
+        waveData.Dispose();
     }
 }

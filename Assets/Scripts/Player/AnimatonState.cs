@@ -10,6 +10,15 @@ public class AnimationChanger
     public AnimationChanger(Animator _animator) {
         animator = _animator;
     }
+
+    public void SetDefaults() {
+        animator.SetBool("idle", true);
+        animator.SetBool("walking", false);
+        animator.SetBool("sailing", false);
+        animator.SetBool("aiming", false);
+        animator.SetBool("casting", false);
+    }
+
     public void SetIdle() {
         animator.SetBool("idle", true);
         animator.SetBool("walking", false);
@@ -23,7 +32,6 @@ public class AnimationChanger
     }
 
     public void SetSailing() {
-        animator.SetBool("aiming", false);
         animator.SetBool("walking", false);
         animator.SetBool("idle", false);
         animator.SetBool("sailing", true);
@@ -40,7 +48,6 @@ public class AnimationChanger
     public void SetCasting() {
         animator.SetBool("casting", true);
     }
-
 }
 
 }

@@ -6,8 +6,8 @@ namespace Fishnet {
 public class Player : MonoBehaviour
 {
     [SerializeField] private FishingCursorTarget fishingCursor = null;
-    [SerializeField] private GameObject lure = null, player = null, raft = null;
-    [SerializeField] private Transform raftTransform = null;
+    [SerializeField] private GameObject lure = null, player = null, raft = null, rod = null;
+    [SerializeField] private Transform raftTransform = null, hookTransform = null;
     [HideInInspector] public AnimationChanger animationChanger;
     public CharacterStatePushdown cursorStateStack;
     public CharacterStatePushdown movementStateStack;
@@ -30,26 +30,30 @@ public class Player : MonoBehaviour
         fishingCursor.DrawCursor();
     }
 
-    public void CastLure() {
-        Vector3 initialPosition = new Vector3(Camera.main.transform.position.x, 0f, Camera.main.transform.position.z);
+    public void Cast() {
+        StartCoroutine(CastLure(2f));
+    }
+
+    IEnumerator CastLure(float seconds) {
+        yield return new WaitForSeconds(seconds);
+        Vector3 initialPosition = hookTransform.position;
         Vector3 finalPosition = new Vector3(fishingCursor.transform.position.x, 0f, fishingCursor.transform.position.z);
         float deltaZ = Vector3.Distance(finalPosition, initialPosition);
 
         GameObject go = new GameObject();
-        go.transform.position = Camera.main.transform.position;
-        go.transform.LookAt(new Vector3(fishingCursor.transform.position.x, Camera.main.transform.position.y, fishingCursor.transform.position.z));
+        go.transform.position = hookTransform.position;
+        go.transform.LookAt(new Vector3(fishingCursor.transform.position.x, hookTransform.position.y, fishingCursor.transform.position.z));
 
         float time = deltaZ / 10f;
         float a_t_sqr = 0.5f * Physics.gravity.y * time * time;
-        float verticalDisplacement = fishingCursor.transform.position.y - Camera.main.transform.position.y;
+        float verticalDisplacement = fishingCursor.transform.position.y - hookTransform.position.y;
         float targetVerticalVelocity = (verticalDisplacement - a_t_sqr) / time;
 
         Vector3 projectileVelocity = new Vector3(0f, targetVerticalVelocity, 10f);
         Vector3 globalProjectileVelocity = go.transform.TransformDirection(projectileVelocity);
 
-        lure.transform.position = Camera.main.transform.position;
+        lure.transform.position = initialPosition;
         lure.GetComponent<Rigidbody>().velocity = globalProjectileVelocity;
-
     }
 
     public bool InMotion() {
@@ -72,6 +76,9 @@ public class Player : MonoBehaviour
         player.GetComponentInChildren<Rigidbody>().useGravity = !player.GetComponentInChildren<Rigidbody>().useGravity;
     }
 
+    public void ToggleRodVisibility() {
+        rod.SetActive(!rod.activeInHierarchy);
+    }
 
     void Update() {
         cursorStateStack.Update();

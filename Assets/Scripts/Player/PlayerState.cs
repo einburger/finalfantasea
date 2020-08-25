@@ -104,16 +104,18 @@ namespace Fishnet {
     {
         public ZoomedInState(Player player) : base(player) {
             player.animationChanger.SetAiming();
+            player.ToggleRodVisibility();
         }
         public override void HandleInput() {
             if (Input.GetMouseButtonUp(1)) {
                 player.animationChanger.UnsetAiming();
                 player.cursorStateStack.PopState();
                 player.ResetAim();
+                player.ToggleRodVisibility();
             } 
             if (Input.GetMouseButtonDown(0)) {
                 player.animationChanger.SetCasting();
-                player.CastLure();
+                player.cursorStateStack.PopState();
                 player.cursorStateStack.PushState(new CastingState(player));
             }
         }
@@ -123,14 +125,15 @@ namespace Fishnet {
     }
 
     public class CastingState : CharacterState {
-        bool canGetInput = false;
         public CastingState(Player player) : base(player) {
             player.animationChanger.SetCasting();
+            player.Cast();
         }
         public override void HandleInput() {
             if (Input.GetMouseButtonDown(0)) {
-                player.animationChanger.SetAiming();
                 player.cursorStateStack.PopState();
+                player.ToggleRodVisibility();
+                player.animationChanger.SetDefaults();
             }
         }
     }

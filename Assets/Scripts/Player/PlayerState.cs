@@ -107,7 +107,7 @@ namespace Fishnet {
             player.ToggleRodVisibility();
         }
         public override void HandleInput() {
-            if (Input.GetMouseButtonUp(1)) {
+            if (Input.GetMouseButtonDown(1)) {
                 player.animationChanger.UnsetAiming();
                 player.cursorStateStack.PopState();
                 player.ResetAim();
@@ -121,6 +121,7 @@ namespace Fishnet {
         }
         public override void UpdateState() {
             player.DrawCursor();
+            // player.LookAtCursor();
         }
     }
 
@@ -131,6 +132,8 @@ namespace Fishnet {
         }
         public override void HandleInput() {
             if (Input.GetMouseButtonDown(0)) {
+                player.ResetAim();
+                player.ToggleLure();
                 player.cursorStateStack.PopState();
                 player.ToggleRodVisibility();
                 player.animationChanger.SetDefaults();

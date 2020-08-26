@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5806b456136590b419669ca9aededde7, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -140,7 +140,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ea5a6a8e8b3e27743b535e929eac616b, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -221,7 +221,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5806b456136590b419669ca9aededde7, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -257,7 +257,6 @@ GameObject:
   - component: {fileID: 4867864729439078255}
   - component: {fileID: 4096936301547157470}
   - component: {fileID: 2238963032666946927}
-  - component: {fileID: 1346290465154091424}
   m_Layer: 0
   m_Name: Fish
   m_TagString: Untagged
@@ -339,7 +338,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5212433975181389872}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff7e86673c6f309419b11d988ddc389b, type: 3}
   m_Name: 
@@ -369,19 +368,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wiggleIntensityConstant: 15.68
---- !u!114 &1346290465154091424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5212433975181389872}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6897613d4cdb863488c573bfedf000d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fishSensorCollider: {fileID: 2108766979451180385}
 --- !u!1 &9189080673926514797
 GameObject:
   m_ObjectHideFlags: 0

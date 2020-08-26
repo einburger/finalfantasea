@@ -11,6 +11,10 @@ public class AnimationChanger
         animator = _animator;
     }
 
+    public bool GetBool(string name) {
+        return animator.GetBool(name);
+    }
+
     public void SetDefaults() {
         animator.SetBool("idle", true);
         animator.SetBool("walking", false);

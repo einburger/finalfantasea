@@ -8,6 +8,8 @@ public class FishingCursorTarget : MonoBehaviour
     private Vector3 velocity;
     private bool cursorDisplayed = false;
     private MeshRenderer cursor;
+    public float currentHeight = 0f;
+    [SerializeField] private WaveData waveData = null;
 
     private void Awake() {
         layerMask = LayerMask.GetMask("Water");
@@ -26,6 +28,7 @@ public class FishingCursorTarget : MonoBehaviour
                 transform.position = hitInfo.point;
             }
             transform.position = Vector3.SmoothDamp(transform.position, hitInfo.point, ref velocity, 0.1f);
+            currentHeight = waveData.GetWaveHeight(transform.position);
         } 
     }
 

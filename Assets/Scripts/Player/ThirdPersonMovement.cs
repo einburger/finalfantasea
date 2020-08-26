@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ThirdPersonMovement : MonoBehaviour 
 {
-    public Animator animController;
     public Transform cameraTransform;
     public Transform player;
     public Rigidbody rb;
